@@ -4,16 +4,16 @@ function getSpecieByName(specieName) {
   return species.find((specie) => specie.name === specieName);
 }
 
-function getDayOfficeHour(day) {
-  return day !== 'Monday'
-    ? `Open from ${hours[day].open}am until ${hours[day].close}pm`
+function getDayOfficeHour(dia) {
+  return dia !== 'Monday'
+    ? `Open from ${hours[dia].open}am until ${hours[dia].close}pm`
     : 'CLOSED';
 }
 
-function getDayExhibition(day) {
-  return day !== 'Monday'
+function getDayExhibition(dia) {
+  return dia !== 'Monday'
     ? species.reduce((acc, specie) => {
-      if (specie.availability.includes(day)) acc.push(specie.name);
+      if (specie.availability.includes(dia)) acc.push(specie.name);
       return acc;
     }, [])
     : 'The zoo will be closed!';
@@ -33,11 +33,11 @@ function getSchedule(scheduleTarget) {
   if (filter === 'animal') {
     return getSpecieByName(scheduleTarget).availability;
   }
-  return Object.keys(hours).reduce((acc, day) => {
-    if (!filter || scheduleTarget === day) {
-      acc[day] = {
-        officeHour: getDayOfficeHour(day),
-        exhibition: getDayExhibition(day),
+  return Object.keys(hours).reduce((acc, dia) => {
+    if (!filter || scheduleTarget === dia) {
+      acc[dia] = {
+        officeHour: getDayOfficeHour(dia),
+        exhibition: getDayExhibition(dia),
       };
     }
     return acc;
